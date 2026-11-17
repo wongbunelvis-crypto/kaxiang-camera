@@ -1,20 +1,27 @@
 name: BuildIPA
 on:
   push:
+    paths-ignore:
+      - 'out/**'
   workflow_dispatch:
 jobs:
   build:
-    runs-on: macos-14
+    runs-on: macos-latest
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
+
       - name: Install xcodegen
         run: brew install xcodegen
-      - name: Generate project
+
+      - name: Generate Xcode project
         run: xcodegen generate
+
       - name: Build unsigned app
         run: |
           set -o pipefail
-          xcodebuild -project Kaxiang.xcodeproj -scheme Kaxiang -configuration Release -sdk iphoneos -derivedDataPath build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" 2>&1 | tee build.log
+          xcodebuild -project Kaxiang.xcodeproj             -scheme Kaxiang             -configuration Release             -sdk iphoneos             -derivedDataPath build             CODE_SIGNING_ALLOWED=NO             CODE_SIGNING_REQUIRED=NO             CODE_SIGN_IDENTITY="" 2>&1 | tee build.log
+
       - name: Package ipa
         if: success()
         run: |
@@ -22,15 +29,18 @@ jobs:
           cp -R build/Build/Products/Release-iphoneos/Kaxiang.app Payload/
           zip -qr Kaxiang.ipa Payload
           ls -lh Kaxiang.ipa
+
       - name: Upload ipa
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: Kaxiang-ipa
           path: Kaxiang.ipa
-      - name: Upload log
+
+      - name: Upload build log
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: build-log
           path: build.log
+          if-no-files-found: ignore
