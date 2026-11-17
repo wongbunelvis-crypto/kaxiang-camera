@@ -14,6 +14,10 @@ targets:
           - Info.plist
     info:
       path: Sources/Info.plist
+      properties:
+        NSCameraUsageDescription: 需要用摄像头实时抠出人像并更换背景
+        NSPhotoLibraryAddUsageDescription: 需要把拍好的照片存进相册
+        CFBundleDisplayName: 抠像相机
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.suchuan.kaxiang
