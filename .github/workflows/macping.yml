@@ -1,9 +1,0 @@
-name: MacPing
-on:
-  workflow_dispatch:
-  push:
-jobs:
-  ping:
-    runs-on: macos-latest
-    steps:
-      - run: sw_vers && xcodebuild -version
