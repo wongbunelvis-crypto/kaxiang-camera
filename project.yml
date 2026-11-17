@@ -1,0 +1,29 @@
+name: Kaxiang
+options:
+  bundleIdPrefix: com.suchuan
+  deploymentTarget:
+    iOS: "15.0"
+  minimumXcodeGenVersion: "2.0"
+targets:
+  Kaxiang:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+        excludes:
+          - Info.plist
+    info:
+      path: Sources/Info.plist
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.suchuan.kaxiang
+        PRODUCT_NAME: Kaxiang
+        TARGETED_DEVICE_FAMILY: "1"
+        SWIFT_VERSION: "5.0"
+        GENERATE_INFOPLIST_FILE: "NO"
+        CODE_SIGNING_ALLOWED: "NO"
+        CODE_SIGNING_REQUIRED: "NO"
+        CODE_SIGN_IDENTITY: ""
+        ENABLE_BITCODE: "NO"
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
